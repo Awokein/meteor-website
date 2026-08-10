@@ -1,20 +1,20 @@
 import type { PageLoad } from "./$types"
 import { fetchStats } from "$lib/stats"
-import { parse } from "semver"
+import { parse, SemVer } from "semver"
 
 export const load: PageLoad = async ({ fetch }) => {
     const stats = await fetchStats(fetch)
     const builds = []
 
-    let latest = parse("0.0.0")!
+    let latest = parseVersion("0.0.0")!
 
     for (const str in stats.builds) {
-        const version = parse(str)!
+        const version = parseVersion(str)!
         if (version.compare(latest) > 0) latest = version
     }
 
     for (const str in stats.builds) {
-        const version = parse(str)!
+        const version = parseVersion(str)!
         const number = stats.builds[str]
 
         if (version.compare(latest) != 0) {
@@ -30,6 +30,14 @@ export const load: PageLoad = async ({ fetch }) => {
     return {
         builds: groupBy(builds, build => build.version.major + "." + build.version.minor),
     }
+}
+
+function parseVersion(str: string): SemVer | null {
+    while (str.split(".").length < 3) {
+        str += ".0"
+    }
+
+    return parse(str)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
