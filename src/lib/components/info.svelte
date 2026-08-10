@@ -10,14 +10,22 @@
 
     function getLatestVersion(): string {
         let latest = "0.0.0"
+        let latestOriginal = "0.0.0"
 
-        for (const version of Object.keys(stats.builds)) {
+        for (const versionOriginal of Object.keys(stats.builds)) {
+            let version = versionOriginal
+
+            while (version.split(".").length < 3) {
+                version += ".0"
+            }
+
             if (semver.gt(version, latest)) {
                 latest = version
+                latestOriginal = versionOriginal
             }
         }
 
-        return latest
+        return latestOriginal
     }
 </script>
 
