@@ -13,7 +13,7 @@
         event.preventDefault()
         errorMessage = ""
 
-        api("account/login?name=" + name + "&password=" + password)
+        api("account/login?name=" + encodeURIComponent(name) + "&password=" + encodeURIComponent(password))
             .then(res => token.set(res.token))
             .catch(reason => (errorMessage = reason))
     }
