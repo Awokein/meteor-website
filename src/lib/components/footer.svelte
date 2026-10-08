@@ -1,5 +1,5 @@
 <footer>
-    <p>Copyright © 2026 Meteor Development</p>
+    <p>Copyright © {new Date().getFullYear()} Meteor Development</p>
     <p>All Rights Reserved.</p>
 </footer>
 
