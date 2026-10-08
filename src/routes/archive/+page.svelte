@@ -31,6 +31,17 @@
                     </ul>
                     <hr />
                 {/each}
+
+                {#if data.baritone.length}
+                    <h3>Baritone</h3>
+                    <ul>
+                        {#each data.baritone as version (version)}
+                            <li>
+                                <a href={`https://meteorclient.com/api/downloadBaritone?version=${version}`}>{version}</a>
+                            </li>
+                        {/each}
+                    </ul>
+                {/if}
             </div>
         </div>
     </div>
